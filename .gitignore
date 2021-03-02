@@ -1,0 +1,9 @@
+node_modules
+
+uploads/*
+
+readme.md
+
+ormconfig.env
+
+yarn-error.log

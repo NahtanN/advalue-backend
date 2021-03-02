@@ -4,6 +4,7 @@ uploads/*
 
 readme.md
 
+.env
 ormconfig.env
 
 yarn-error.log

@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
+import Category from "./Category";
+import Image from "./Image";
 
 @Entity('products')
 export default class Product {
@@ -14,6 +16,12 @@ export default class Product {
     
     @Column()
     category_id: number;
+
+    @ManyToOne(() => Category, category => category.products)
+    category: Category;
+
+    @OneToMany(() => Image, image => image.product_id)
+    images: Image[]
 
     constructor() {
         if (!this.id) {

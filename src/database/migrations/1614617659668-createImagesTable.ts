@@ -23,11 +23,11 @@ export class createImagesTable1614617659668 implements MigrationInterface {
                 },
                 {
                     name: 'key',
-                    type: 'varhcar'
+                    type: 'varchar'
                 },
                 {
                     name: 'url',
-                    type: 'string'
+                    type: 'varchar'
                 },
                 {
                     name: 'createdAt',

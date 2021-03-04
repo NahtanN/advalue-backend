@@ -24,8 +24,11 @@ export default class Product {
     @JoinColumn({ name: 'category_id' })
     category: Category;
 
-    @OneToMany(() => Image, image => image.product_id)
-    images: Image[]
+    @OneToMany(() => Image, image => image.product, {
+        cascade: ['insert', 'update']
+    })
+    @JoinColumn({ name: 'category_id' })
+    images: Image[];
 
     constructor() {
         if (!this.id) {

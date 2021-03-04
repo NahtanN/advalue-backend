@@ -1,10 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import Product from "./Product";
 
 @Entity('images')
 export default class Image {
     @PrimaryColumn()
-    readonly id: number;
+    id: number;
 
     @Column()
     name: string;
@@ -25,5 +25,6 @@ export default class Image {
     product_id: number;
 
     @ManyToOne(() => Product, product => product.images)
+    @JoinColumn({ name: 'product_id' })
     product: Product;
 }

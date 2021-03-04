@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import Product from "./Product";
 
 @Entity('images')
@@ -18,7 +18,7 @@ export default class Image {
     @Column()
     url: string;
 
-    @Column()
+    @CreateDateColumn({ select: false })
     createdAt: Date;
 
     @Column()

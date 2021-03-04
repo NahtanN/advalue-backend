@@ -14,18 +14,19 @@ export default class Product {
     @Column()
     value: number;
     
-    @CreateDateColumn()
+    @CreateDateColumn({ select: false })
     createdAt: Date;
 
-    @Column()
+    @Column({ select: false })
     category_id: number;
 
-    @ManyToOne(() => Category)
+    @ManyToOne(() => Category, { eager: true })
     @JoinColumn({ name: 'category_id' })
     category: Category;
 
     @OneToMany(() => Image, image => image.product, {
-        cascade: ['insert', 'update']
+        cascade: ['insert', 'update'],
+        eager: true
     })
     @JoinColumn({ name: 'category_id' })
     images: Image[];

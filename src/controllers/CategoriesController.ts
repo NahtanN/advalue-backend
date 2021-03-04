@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createConnection, DeepPartial, getConnection, getRepository } from "typeorm";
+import { getConnection, getRepository } from "typeorm";
 import Category from "../models/Category";
 
 export default {
@@ -35,10 +35,8 @@ export default {
 
         const categoriesRepository = getRepository(Category);
 
-        const category = await categoriesRepository.findOne(nameId);
-
         // if a category matching the [id] was not found, return a new error
-        if(!category) return res.status(404).json({ error: "Not found!" });
+        const category = await categoriesRepository.findOneOrFail(nameId);
 
         // if it was found, remove from the database and return a OK(200) status
         await categoriesRepository.remove(category);

@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import ImagesHelper from '../Helper/ImagesHelper';
 import Product from '../models/Product';
-import findCategory from './CategoriesController';
+import CreateProductValidation from '../validation/CreateProductValidation';
 
 const imagesHelper = new ImagesHelper();
+const productValidation = new CreateProductValidation();
 
 interface MulterFile {
     originalname: string;
@@ -44,6 +45,10 @@ export default {
             images,
         };
         
+        // Checks if the product data is valid
+        await productValidation.validate(data);
+
+        // Connects if 'Product' repository
         const getProductRepositoy = getRepository(Product);
 
         // Create the product schema

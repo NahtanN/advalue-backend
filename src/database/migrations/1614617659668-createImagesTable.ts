@@ -45,7 +45,8 @@ export class createImagesTable1614617659668 implements MigrationInterface {
                     columnNames: ['product_id'],
                     referencedTableName: 'products',
                     referencedColumnNames: ['id'],
-                    onUpdate: 'CASCADE'
+                    onUpdate: 'CASCADE',
+                    onDelete: 'CASCADE'
                 }
             ]
         }));

@@ -5,6 +5,7 @@ import cofig from './config/upload';
 import GetProductsController from './controllers/GetProductsController';
 import CreateProductController from './controllers/CreateProductController';
 import CategoriesController from './controllers/CategoriesController';
+import DeleteProductController from './controllers/DeleteProductController';
 
 export const routes = Router();
 const upload = multer(cofig);
@@ -17,6 +18,9 @@ routes.get('/product/:id', GetProductsController.getProduct);
 
 // Create a new product
 routes.post('/create-product', upload.array('image'), CreateProductController.createProduct);
+
+// Delete a product matching the [id]
+routes.delete('/admin/delete-product/:id', DeleteProductController.deleteProduct);
 
 // Handle categories
 routes.get('/admin/create-categories', CategoriesController.showCategories);

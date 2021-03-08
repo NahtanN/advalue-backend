@@ -25,7 +25,7 @@ export default class Product {
     category: Category;
 
     @OneToMany(() => Image, image => image.product, {
-        cascade: ['insert', 'update'],
+        cascade: ['insert', 'update', 'remove'],
         eager: true
     })
     @JoinColumn({ name: 'category_id' })

@@ -35,7 +35,8 @@ export class createProductsTable1614617546231 implements MigrationInterface {
                     columnNames: ['category_id'],
                     referencedTableName: 'categories',
                     referencedColumnNames: ['id'],
-                    onUpdate: 'CASCADE'
+                    onUpdate: 'CASCADE',
+                    onDelete: 'CASCADE'
                 }
             ]
         }));

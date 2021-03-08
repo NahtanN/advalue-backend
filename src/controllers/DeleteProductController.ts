@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import Product from "../models/Product";
+import ImagesController from './ImagesController';
+
+const imagesController = new ImagesController();
 
 export default {
 
@@ -16,7 +19,12 @@ export default {
                 id
             }
         })
-    
+        
+        // Deletes all images associated with the product
+        product.images.map(image => {
+            imagesController.deleteProductImages(image.key);
+        });
+
         //  Deleted him
         await productRepository.remove(product);
 

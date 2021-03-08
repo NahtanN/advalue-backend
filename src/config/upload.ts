@@ -9,6 +9,8 @@ const generateName = (originalName: string, hash: string) => {
 }
 
 const storageTypes = {
+
+    // Local storage config
     local: multer.diskStorage({
         destination: (req, file, cb) => {
             cb(null, path.join(__dirname, '..', '..', 'uploads'))
@@ -23,6 +25,7 @@ const storageTypes = {
             });
         }
     }),
+    // Amazon S3 storage config
     s3: {
 
     }
@@ -30,7 +33,12 @@ const storageTypes = {
 
 export default {
     destination: path.join(__dirname, '..', '..', 'uploads'),
-    storage: storageTypes['local'],
+
+    // Where to storage. If it's in production, store in Amazon S3 cloud
+    storage: 
+        process.env.NODE_ENV
+            ? storageTypes.s3
+            : storageTypes.local,
     limits: {
         fileSize: 2 * 1024 * 1024,
     },

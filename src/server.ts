@@ -1,12 +1,15 @@
+import 'dotenv/config'
+
 import chalk from 'chalk';
 import express from 'express';
 import 'express-async-errors';
 import path from 'path';
-import './database/connection';
 import { routes } from './routes';
 import handler from './errors/handler';
 
-const port = process.env.PORT || 3333;
+import './database/connection';
+
+const port = process.env.NODE_ENV || process.env.PORT;
 
 const app = express();
 

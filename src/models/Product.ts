@@ -14,8 +14,8 @@ export default class Product {
     @Column()
     value: number;
     
-    @CreateDateColumn({ select: false })
-    createdAt: Date;
+    @CreateDateColumn()
+    created_at: Date;
 
     @Column({ select: false })
     category_id: number;

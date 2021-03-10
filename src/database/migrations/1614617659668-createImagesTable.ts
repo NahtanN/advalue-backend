@@ -30,7 +30,7 @@ export class createImagesTable1614617659668 implements MigrationInterface {
                     type: 'varchar'
                 },
                 {
-                    name: 'createdAt',
+                    name: 'created_at',
                     type: 'timestamp',
                     default: 'now()'
                 },

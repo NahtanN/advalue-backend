@@ -20,7 +20,7 @@ export class createProductsTable1614617546231 implements MigrationInterface {
                     type: 'integer'
                 },
                 {
-                    name: 'createdAt',
+                    name: 'created_at',
                     type: 'timestamp',
                     default: 'now()'
                 },

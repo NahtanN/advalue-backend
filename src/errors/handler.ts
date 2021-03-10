@@ -1,6 +1,7 @@
 import { ErrorRequestHandler } from 'express';
 import { EntityNotFoundError, QueryFailedError } from 'typeorm';
 import { ValidationError } from 'yup';
+import ProductsNotFound from './ProductsNotFound';
 
 interface ErrorsInterface {
     [key: string]: string[];
@@ -32,6 +33,11 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
         })
     }
 
+    // Used when the list of products is empty
+    else if(err instanceof ProductsNotFound) {
+        return res.status(404).json({ Error: err.message });
+    }
+    
     return res.status(500).json({ error: "Internal server error!"});
 }
 

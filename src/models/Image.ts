@@ -18,8 +18,8 @@ export default class Image {
     @Column()
     url: string;
 
-    @CreateDateColumn({ select: false })
-    createdAt: Date;
+    @CreateDateColumn()
+    created_at: Date;
 
     @Column()
     product_id: number;

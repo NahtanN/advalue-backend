@@ -13,7 +13,8 @@ module.exports = {
         "dist/models/*.js"
     ],
     "extra": {
-        "ssl": true,
-        "rejectUnauthorized": false
+        "ssl": {
+            "rejectUnauthorized": false
+        }
     }
 }

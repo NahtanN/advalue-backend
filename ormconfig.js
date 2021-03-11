@@ -11,5 +11,10 @@ module.exports = {
     },
     "entities": [
         "dist/models/*.js"
-    ]
+    ],
+    "extra": {
+        "ssl": {
+            "rejectUnauthorized": false,
+        }
+    }
 }

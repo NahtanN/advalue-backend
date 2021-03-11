@@ -7,6 +7,7 @@ declare global {
             AWS_SECRET_ACCESS_KEY: string;
             AWS_BUCKET_NAME: string;
             AWS_DEFAULT_REGION: string;
+            DATABASE_URL: string;
         }
     }
 }

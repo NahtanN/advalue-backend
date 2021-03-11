@@ -9,7 +9,7 @@ import handler from './errors/handler';
 
 import './database/connection';
 
-const port = process.env.NODE_ENV || process.env.PORT;
+const port = process.env.PORT || 3333;
 
 const app = express();
 

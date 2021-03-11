@@ -50,7 +50,7 @@ export default {
 
     // Where to storage. If it's in production, store in Amazon S3 cloud
     storage: 
-        process.env.NODE_ENV
+        process.env.PORT
             ? storageTypes.s3
             : storageTypes.local,
     limits: {

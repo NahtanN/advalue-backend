@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import ImagesHelper from '../Helper/ImagesHelper';
+import ImagesHelper from '../helper/ImagesHelper';
 import Product from '../models/Product';
 import CreateProductValidation from '../validation/CreateProductValidation';
 

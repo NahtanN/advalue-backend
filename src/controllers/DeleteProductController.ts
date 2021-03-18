@@ -22,7 +22,7 @@ export default {
         
         // Deletes all images associated with the product
         product.images.map(image => {
-            imagesController.deleteProductImages(image.key);
+            imagesController.deleteImagesFiles(image.key);
         });
 
         //  Deleted him

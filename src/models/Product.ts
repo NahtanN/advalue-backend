@@ -17,10 +17,13 @@ export default class Product {
     @CreateDateColumn()
     created_at: Date;
 
-    @Column({ select: false })
+    @Column()
     category_id: number;
 
-    @ManyToOne(() => Category, { eager: true })
+    @ManyToOne(() => Category, { 
+        cascade: ['insert', 'update', 'remove'],
+        eager: true 
+    })
     @JoinColumn({ name: 'category_id' })
     category: Category;
 
@@ -28,7 +31,7 @@ export default class Product {
         cascade: ['insert', 'update', 'remove'],
         eager: true
     })
-    @JoinColumn({ name: 'category_id' })
+    @JoinColumn()
     images: Image[];
 
     constructor() {

@@ -26,7 +26,8 @@ export class createProductsTable1614617546231 implements MigrationInterface {
                 },
                 {
                     name: 'category_id',
-                    type: 'integer'
+                    type: 'integer',
+                    isNullable: true
                 },
             ],
             foreignKeys: [
@@ -36,7 +37,6 @@ export class createProductsTable1614617546231 implements MigrationInterface {
                     referencedTableName: 'categories',
                     referencedColumnNames: ['id'],
                     onUpdate: 'CASCADE',
-                    onDelete: 'CASCADE'
                 }
             ]
         }));

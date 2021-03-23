@@ -5,9 +5,9 @@ interface DataInterface {
     value: number;
     category_id: number;
     images: Array<{
-        name: string;
+        name?: string;
         size: number;
-        key: string;
+        key?: string;
         url: string;
     }>
 }

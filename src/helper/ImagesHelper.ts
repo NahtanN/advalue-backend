@@ -3,6 +3,6 @@ export default class ImagesHelper {
     getLocalUrl(filename: string): string {
         const env = process.env;
 
-        return `${env.APP_URL}${env.PORT}/images/${filename}`;
+        return `${env.APP_URL}/images/${filename}`;
     }
 }

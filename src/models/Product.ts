@@ -17,18 +17,20 @@ export default class Product {
     @CreateDateColumn()
     created_at: Date;
 
-    @Column({ select: false })
+    @Column()
     category_id: number;
 
-    @ManyToOne(() => Category, { eager: true })
+    @ManyToOne(() => Category, { 
+        cascade: true,
+        eager: true,
+    })
     @JoinColumn({ name: 'category_id' })
     category: Category;
 
     @OneToMany(() => Image, image => image.product, {
-        cascade: ['insert', 'update', 'remove'],
+        cascade: true,
         eager: true
     })
-    @JoinColumn({ name: 'category_id' })
     images: Image[];
 
     constructor() {

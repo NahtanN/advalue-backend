@@ -37,7 +37,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     else if(err instanceof ProductsNotFound) {
         return res.status(404).json({ Error: err.message });
     }
-    
+    console.log(err)
     return res.status(500).json({ error: "Internal server error!"});
 }
 

@@ -22,7 +22,7 @@ export default class Image {
     created_at: Date;
 
     @Column()
-    product_id: number;
+    product_id: string;
 
     @ManyToOne(() => Product, product => product.images)
     @JoinColumn({ name: 'product_id' })

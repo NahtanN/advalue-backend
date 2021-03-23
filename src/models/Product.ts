@@ -21,17 +21,16 @@ export default class Product {
     category_id: number;
 
     @ManyToOne(() => Category, { 
-        cascade: ['insert', 'update', 'remove'],
-        eager: true 
+        cascade: true,
+        eager: true,
     })
     @JoinColumn({ name: 'category_id' })
     category: Category;
 
     @OneToMany(() => Image, image => image.product, {
-        cascade: ['insert', 'update', 'remove'],
+        cascade: true,
         eager: true
     })
-    @JoinColumn()
     images: Image[];
 
     constructor() {

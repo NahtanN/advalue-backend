@@ -1,19 +1,11 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import ImagesHelper from '../helper/ImagesHelper';
 import Product from '../models/Product';
 import CreateProductValidation from '../validation/CreateProductValidation';
+import ImagesController, { MulterFile } from './ImagesController';
 
-const imagesHelper = new ImagesHelper();
+const imagesController = new ImagesController();
 const productValidation = new CreateProductValidation();
-
-interface MulterFile {
-    originalname: string;
-    filename: string;
-    size: number;
-    key?: string;
-    location?: string;
-}
 
 export default {
     async createProduct(req: Request, res: Response) {
@@ -21,22 +13,7 @@ export default {
         const files = req.files as MulterFile[];
         
         // Images schema
-        const images = files.map(file => {
-            const {
-                originalname,
-                filename,
-                size,
-                key,
-                location
-            } = file;
-            
-            return {
-                name: originalname,
-                size,
-                key: key || filename,
-                url: location || imagesHelper.getLocalUrl(filename)
-            }
-        });
+        const images = imagesController.saveImagesFiles(files);
 
         const data = {
             title,

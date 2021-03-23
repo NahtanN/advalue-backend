@@ -27,11 +27,12 @@ export default {
         });
         
         if(products[0].length === 0) throw new ProductsNotFound('Page not found!')
-
+        
         return res.status(200).json({
             current_page: page,
             prev_page: skip_value > 0 ? (page - 1) : null,
             next_page: products[1] > page * 10 ? (page + 1) : null,
+            quantity: products[0].length,
             data: products[0]
         });
     },

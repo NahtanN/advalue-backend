@@ -41,6 +41,7 @@ export default class ImagesController {
         }
     }
 
+    // Saves the physical files
     saveImagesFiles(files: MulterFile[]) {
         return files.map(file => {
             const {
@@ -60,6 +61,7 @@ export default class ImagesController {
         });
     }
 
+    // Add images references into the database
     async addImagesIntoDatabase(imagesFiles: MulterFile[]) {
         const getImagesRepository = getRepository(Image);
 

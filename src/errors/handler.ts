@@ -8,12 +8,13 @@ interface ErrorsInterface {
 }
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-    // Used to handle delete category error
+    console.log(err)
+    // Thrown when no result could be found in methods which are not allowed to return undefined or an empty set
     if(err instanceof EntityNotFoundError) {
         return res.status(404).json({ message: err.message });
     } 
     
-    // Used to handle show product error. Usually occurs when the [id] does not match
+    // Thrown when query execution has failed
     else if(err instanceof QueryFailedError) {
         return res.status(400).json({ message: err.message })
     }

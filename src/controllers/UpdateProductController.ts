@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getConnection, getRepository } from "typeorm";
 import Category from "../models/Category";
 import Product from "../models/Product";
 import CategoriesController from './CategoriesController';
@@ -13,53 +13,61 @@ export default {
         const { title, category_id, value, delete_image } = req.body;
         const files = req.files as MulterFile[];
 
-        // Connect with the Product repository
-        const getProductRepository = getRepository(Product);
-        
+        // Connect with the Database
+        const queryRunner = getConnection().createQueryRunner();
+        await queryRunner.connect();
+
         // Try to find a product matching the [productId]
         // If it fails, return a error of type QueryFailedError
-        let product = await getProductRepository.findOneOrFail(productId);
-        
-        // Update filds
-        product.title = title;        
-        product.value = value;
+        const product = await queryRunner.manager.findOneOrFail(Product, productId);
 
-        // Updates category entity if true
-        if(category_id) {
+        await queryRunner.startTransaction();
 
-            // Finds the category entity        
-            let category = await CategoriesController.findCategory(Number(category_id));
-            product.category = category;
-        }
-
-        // If user wants to add some images
-        if(files) {
-
-            // Gets formatted images
-            const imagesFiles = imagesController.saveImagesFiles(files);
-    
-            // Insert product_id into images files
-            const imagesProductId = imagesFiles.map(image => {
-                return {
-                    ...image,
-                    product_id: productId
-                }
-            });
+        try {
             
-            // Save new images references into the database
-            imagesController.addImagesIntoDatabase(imagesProductId)
+            // Update filds
+            product.title = title;        
+            product.value = value;
+    
+            // Updates category entity if true
+            if(category_id) {
+    
+                // Finds the category entity        
+                let category = await CategoriesController.findCategory(Number(category_id));
+                product.category = category;
+            }
+    
+            // Save the changes
+            await queryRunner.manager.save(product);
+            
+            // If user wants to add some images
+            if(files.length !== 0) await imagesController.addImagesIntoDatabase(files, productId);
+    
+            // If user wants to delete some images
+            if(delete_image) {
+                typeof delete_image === 'string' 
+                    ? await imagesController.deleteImageFromDatabase(delete_image, productId)  // Deletes 1 image
+                    : await imagesController.deleteManyImagesFromDatabase(delete_image, productId); // Deletes an array of images
+            }
+
+            await queryRunner.commitTransaction();
+
+        } catch(err) {
+
+            // Rollback changes
+            await queryRunner.rollbackTransaction();
+
+            files.map(image => {
+                if(image.filename) imagesController.deleteImagesFiles(image.filename);
+            });
+
+            throw err;
+        } finally {
+
+            // Indicate that we will not perform any more queries using this database connection
+            await queryRunner.release();
         }
 
-        // If user wants to delete some images
-        if(delete_image) {
-            typeof delete_image === 'string' 
-                ? imagesController.deleteImageFromDatabase(delete_image, productId)  // Deletes 1 image
-                : imagesController.deleteManyImagesFromDatabase(delete_image, productId); // Deletes an array of images
-        }
-
-        // Save the changes
-        await getProductRepository.save(product);
-        
         return res.status(200).json({ message: 'successfully' });
     },
 

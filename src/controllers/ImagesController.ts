@@ -22,25 +22,6 @@ const imagesHelper = new ImagesHelper();
 
 export default class ImagesController {
     
-    // Deletes the physical file
-    async deleteImagesFiles(Key: string) {
-
-        // Deletes images from AWS S3 cloud
-        if(process.env.PORT) {
-            return s3.deleteObject({
-                Bucket: process.env.AWS_BUCKET_NAME,
-                Key,
-            }).promise();
-        }
-
-        // Deletes from local storage
-        else {
-            return promisify(fs.unlink)(
-                path.resolve(__dirname, '..', '..', 'uploads', Key)
-            );
-        }
-    }
-
     // Saves the physical files
     saveImagesFiles(files: MulterFile[]) {
         return files.map(file => {
@@ -60,14 +41,45 @@ export default class ImagesController {
             }
         });
     }
+    
+    // Deletes the physical file
+    async deleteImagesFiles(Key: string) {
+
+        // Deletes images from AWS S3 cloud
+        if(process.env.PORT) {
+            return s3.deleteObject({
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key,
+            }).promise();
+        }
+
+        // Deletes from local storage
+        else {
+            return promisify(fs.unlink)(
+                path.resolve(__dirname, '..', '..', 'uploads', Key)
+            );
+        }
+    }
 
     // Add images references into the database
-    async addImagesIntoDatabase(imagesFiles: MulterFile[]) {
+    async addImagesIntoDatabase(imagesFiles: MulterFile[], productId: string) {
+         
+        // Gets formatted images
+         const imagesSchema = this.saveImagesFiles(imagesFiles);
+    
+         // Insert product_id into images files
+         const imagesProductId = imagesSchema.map(image => {
+             return {
+                 ...image,
+                 product_id: productId
+             }
+         });
+        
         const getImagesRepository = getRepository(Image);
 
-        const images = getImagesRepository.create(imagesFiles);
+        const images = getImagesRepository.create(imagesProductId);
 
-        await getImagesRepository.save(images);
+        return await getImagesRepository.save(images);
     }
 
     // Deletes a image from the database
@@ -86,9 +98,9 @@ export default class ImagesController {
     }
 
     // Deletes many images from database
-    deleteManyImagesFromDatabase(imagesKey: Array<string>, productId: string) {
-        imagesKey.map(imageKey => {
-            this.deleteImageFromDatabase(imageKey, productId);
+    async deleteManyImagesFromDatabase(imagesKey: Array<string>, productId: string) {
+        return imagesKey.forEach(async imageKey => {
+            await this.deleteImageFromDatabase(imageKey, productId);
         });
     }
 }

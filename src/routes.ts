@@ -14,19 +14,19 @@ const upload = multer(cofig);
 // List all producst from database
 routes.get('/', GetProductsController.listProducts);
 
-// Gets a product matching the [id]
-routes.get('/product/:id', GetProductsController.getProduct);
+// // Gets a product matching the [id]
+// routes.get('/product/:id', GetProductsController.getProduct);
 
 // Create a new product
 routes.post('/create-product', upload.array('image'), CreateProductController.createProduct);
 
-// Update product matching the [id]
-routes.post('/update-product/:id', upload.array('update_image'), UpdateProductController.updateProduct);
+// // Update product matching the [id]
+// routes.post('/update-product/:id', upload.array('update_image'), UpdateProductController.updateProduct);
 
-// Delete a product matching the [id]
-routes.delete('/admin/delete-product/:id', DeleteProductController.deleteProduct);
+// // Delete a product matching the [id]
+// routes.delete('/admin/delete-product/:id', DeleteProductController.deleteProduct);
 
 // Handle categories
 routes.get('/categories', CategoriesController.showCategories);
 routes.post('/admin/create-categories', CategoriesController.createCategories);
-routes.delete('/admin/delete-categorie/:id', CategoriesController.deleteCategory);
+routes.delete('/admin/delete-categorie', CategoriesController.deleteCategory);

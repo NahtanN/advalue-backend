@@ -1,17 +1,9 @@
 module.exports = {
-    "type": "postgres",
+    "type": "mongodb",
     "url": process.env.DATABASE_URL,
-    "migrations": [
-        "dist/database/migrations/*.js"
-    ],
-    "cli": {
-        "migrationsDir": [
-            "src/database/migrations"
-        ]        
-    },
-    "entities": [
-        "dist/models/*.js"
-    ],
+    "useCreateIndex": true,
+    "useNewUrlParser": true,
+    "useUnifiedTopology": true,
     "extra": {
         "ssl": {
             "rejectUnauthorized": false

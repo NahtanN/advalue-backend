@@ -14,13 +14,20 @@ export interface MulterFile {
     product_id?: string;
 }
 
+export interface ImageInterface {
+    name: string;
+    size: number;
+    key: string;
+    url: string;
+}
+
 const s3 = new aws.S3();
 const imagesHelper = new ImagesHelper();
 
 export default class ImagesController {
     
     // Saves the physical files
-    saveImagesFiles(files: MulterFile[]) {
+    saveImagesFiles(files: MulterFile[]) : Array<ImageInterface> {
         return files.map(file => {
             const {
                 originalname,
@@ -31,9 +38,9 @@ export default class ImagesController {
             } = file;
 
             return {
-                name: originalname,
+                name: String(originalname),
                 size,
-                key: key || filename,
+                key: String(key || filename),
                 url: location || imagesHelper.getLocalUrl(filename ? filename : ''),
             }
         });

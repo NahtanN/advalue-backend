@@ -1,4 +1,14 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
+import { ImageInterface } from '../controllers/ImagesController';
+
+export interface ProductInterface extends Document {
+    title: string;
+    category: string;
+    value: number;
+    images: Array<ImageInterface>;
+    createdAt: Date;
+    updateAt: Date;
+}
 
 const productSchema: Schema = new Schema({
     title: {
@@ -21,4 +31,4 @@ const productSchema: Schema = new Schema({
     timestamps: true
 })
 
-export default mongoose.model('Product', productSchema);
+export default mongoose.model<ProductInterface>('Product', productSchema);

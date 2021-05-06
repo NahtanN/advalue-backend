@@ -21,7 +21,7 @@ routes.get('/product/:id', GetProductsController.getProduct);
 routes.post('/create-product', upload.array('image'), CreateProductController.createProduct);
 
 // Update product matching the [id]
-routes.post('/update-product/:id', upload.array('update_image'), UpdateProductController.updateProduct);
+routes.put('/update-product/:id', upload.array('update_image'), UpdateProductController.updateProduct);
 
 // Delete a product matching the [id]
 routes.delete('/admin/delete-product/:id', DeleteProductController.deleteProduct);

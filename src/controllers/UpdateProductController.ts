@@ -1,100 +1,114 @@
-import { Request, Response } from "express";
-import { getConnection, getRepository } from "typeorm";
-import Category from "../models/Category";
-import Product from "../models/Product";
-import CategoriesController from './CategoriesController';
-import ImagesController, { MulterFile } from './ImagesController';
+import { Request, Response } from 'express';
+import mongoose, { ClientSession } from 'mongoose';
+import Product from '../models/Product';
+
+import ImagesController, { MulterFile, ImageInterface } from './ImagesController';
 
 const imagesController = new ImagesController();
 
+const {
+    saveImagesFiles,
+    deleteImagesFiles
+} = imagesController;
+
+// Handles the delition process
+const deleteImage = async (productId: string, session: ClientSession, toDelete: string) => {
+    
+    // Finds the Document that matches the id
+    await Product.updateOne(
+        { _id: productId },
+        {
+            $pull: {
+                "images": {
+                    "key": toDelete
+                }
+            }
+        }
+    )
+    .session(session)
+    .then(() => {
+
+        //If the image was successfully deleted from the Document, delete it from the aws cloud
+        deleteImagesFiles(toDelete) 
+    })
+    .catch(err => {
+        console.log(err)
+    });
+}
+
 export default {
+
+    // Update the product matching the 'id'
     async updateProduct(req: Request, res: Response) {
         const { id: productId } = req.params;
-        const { title, category_id, value, delete_image } = req.body;
+        const { title, category, value, delete_image } = req.body;
         const files = req.files as MulterFile[];
 
-        // Connect with the Database
-        const queryRunner = getConnection().createQueryRunner();
-        await queryRunner.connect();
+        const typeDeleteImage = typeof delete_image;
 
-        // Try to find a product matching the [productId]
-        // If it fails, return a error of type QueryFailedError
-        const product = await queryRunner.manager.findOneOrFail(Product, productId);
-
-        await queryRunner.startTransaction();
+        // Create a session and start a transaction
+        const session = await mongoose.startSession();
+        session.startTransaction();
 
         try {
-            
-            // Update filds
-            product.title = title;        
-            product.value = value;
-    
-            // Updates category entity if true
-            if(category_id) {
-    
-                // Finds the category entity        
-                let category = await CategoriesController.findCategory(Number(category_id));
-                product.category = category;
-            }
-    
-            // Save the changes
-            await queryRunner.manager.save(product);
-            
-            // If user wants to add some images
-            if(files.length !== 0) await imagesController.addImagesIntoDatabase(files, productId);
-    
-            // If user wants to delete some images
-            if(delete_image) {
-                typeof delete_image === 'string' 
-                    ? await imagesController.deleteImageFromDatabase(delete_image, productId)  // Deletes 1 image
-                    : await imagesController.deleteManyImagesFromDatabase(delete_image, productId); // Deletes an array of images
+
+            // Try to find the product matching the 'id'
+            const product = await Product.findOne({
+                _id: productId
+            }).session(session);
+
+            // If the product wasn't found, returns an error
+            if (!product) throw Error;
+
+            if (title) product.title = title; // Update title
+            if (value) product.value = Number(value); // Update value
+            if (category) product.category = category; // Update category
+
+            // If the user sent images to be added
+            if (files.length !== 0) {
+                const images: ImageInterface[] = saveImagesFiles(files);
+
+                images.map(image => {
+                    product.images.push(image); // Add images into the Document
+                })
             }
 
-            await queryRunner.commitTransaction();
+            // If the user wants to delete some images
+            if (typeDeleteImage === 'string') {
 
-        } catch(err) {
+                deleteImage(productId, session, delete_image) // Delete one image
 
-            // Rollback changes
-            await queryRunner.rollbackTransaction();
+            } else if (typeDeleteImage === 'object' && delete_image.length > 0) {
 
+                delete_image.map(async (imageKey: string) => {
+                    deleteImage(productId, session, imageKey) // Delete more than one image
+                })
+            }
+
+            // If nothing failed, saves the changes
+            await product.save();
+
+            // Commit the transaction
+            await session.commitTransaction();
+            
+            return res.status(200).json({ message: 'successfully' })
+
+        } catch (err) {
+
+            // If something failed, roll back all changes
+            await session.abortTransaction();
+
+            // Deletes images added to the aws bucket
             files.map(image => {
-                if(image.filename) imagesController.deleteImagesFiles(image.filename);
+                if (image.key) deleteImagesFiles(image.key)
             });
 
-            throw err;
+            return res.status(500).json({ message: 'Something went wrong' })
+
         } finally {
 
-            // Indicate that we will not perform any more queries using this database connection
-            await queryRunner.release();
+            session.endSession();
+
         }
-
-        return res.status(200).json({ message: 'successfully' });
-    },
-
-    async removeCategoryEntity(id: number) {
-        const getProductRepository = getRepository(Product);
-        const categoriesRepository = getRepository(Category);
-
-        // Finds all the products how has the entity [id]
-        const products = await getProductRepository.find({
-            where: {
-                category_id: id
-            }
-        });
-
-        // Gets the placeholder entity
-        const PlaceHolderCategory = await categoriesRepository.findOneOrFail({
-            where: {
-                name: 'Update our category'
-            }
-        });        
-
-        // Update the products with the placeholder
-        products.map(async product => {
-            product.category = PlaceHolderCategory;
-        });
-
-        // Save changes
-        return await getProductRepository.save(products);
     }
 }

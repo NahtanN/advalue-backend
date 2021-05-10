@@ -2,6 +2,22 @@ import { Request, Response } from "express";
 import Product from "../models/Product";
 import ProductsNotFound from '../errors/ProductsNotFound';
 
+// const queryDatabase = async (limitForPagination: number, skip_value: number) => {
+// 	const products = 
+// 		await Product
+// 			.find()
+// 			.limit(limitForPagination)
+// 			.skip(skip_value)
+// 			.sort(
+// 				{
+// 					createdAt: 'desc',
+// 				}
+// 			)
+// 			.select('-__v -createdAt -updatedAt');	
+
+// 	return products;
+// }
+
 export default {
 
 	// Gets all products from database
@@ -42,6 +58,52 @@ export default {
 		    next_page: totalProducts > page * 10 ? (page + 1) : null,
 		    quantity: products.length,
 		    data: products
+		});
+	},
+
+	async queryProducts(req: Request, res: Response) {
+		const { ctg, fil: filter } = req.query;
+		const category = String(ctg);		
+
+		// var products;
+		var value: string | null;
+
+		switch(filter) {
+			case 'Low+price': {
+				value = 'ASC';
+				break;
+			}
+			case 'High+price': {
+				value = 'DESC';
+				break;
+			}
+			default: {
+				value = null;
+				break;
+			}
+		}
+		
+		const products = 
+			await Product
+				.find(
+					category != 'index' ? { category } : {}
+				)
+				.sort(
+					value != null ? { value } : { createAt: 'desc' }
+				)
+				.select('-__v -createdAt -updatedAt')	
+			
+			
+			// .find(
+				// 	category != 'index' ? { category } : {}, 
+				// 	null, 
+				// 	value != null ? { sort: { value } } : { sort: { createAt: 'desc' } }
+				// )
+				// .select('-__v -createdAt -updatedAt')
+
+		return res.status(200).json({
+			products,
+			value
 		});
 	},
 

@@ -14,6 +14,9 @@ const upload = multer(cofig);
 // List all producst from database
 routes.get('/', GetProductsController.listProducts);
 
+// Get products based on the query fields
+routes.get('/homepage/products/filter', GetProductsController.queryProducts);
+
 // Gets a product matching the [id]
 routes.get('/product/:id', GetProductsController.getProduct);
 

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import ProductsNotFound from "../errors/ProductsNotFound";
 import Product, { ProductInterface } from "../models/Product";
 import ImagesController, { ImageInterface } from './ImagesController';
 
@@ -15,7 +16,7 @@ export default {
             _id: id
         });
 
-        if (!product) return res.json('Product not found')
+        if (!product) throw new ProductsNotFound('Page not found!');
         
         // Deletes all images associated with the product
         product.images.map((image: ImageInterface) => {

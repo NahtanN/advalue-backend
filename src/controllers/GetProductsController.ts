@@ -116,7 +116,10 @@ export default {
 
 		const product = await Product.find({
 			_id: id
-		});
+		})
+		.select('-__v -createdAt -updatedAt');
+		
+        if (!product) throw new ProductsNotFound('Page not found!');
 
 	    return res.status(200).json(product);
 	}

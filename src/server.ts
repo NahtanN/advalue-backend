@@ -18,11 +18,12 @@ app.use(express.json());
 app.use(routes);
 app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
-// app.use(handler);
+app.use(handler);
 
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 }).then(() => {
     console.log(chalk.green('Database connected'))
     app.listen(port, () => console.log(`${chalk.green('Server is running')}`));

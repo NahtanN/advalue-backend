@@ -1,26 +1,26 @@
 import { ErrorRequestHandler } from 'express';
-import { EntityNotFoundError, QueryFailedError } from 'typeorm';
+import mongoose from 'mongoose';
+import { MongoError } from 'mongodb';
 import { ValidationError } from 'yup';
 import ProductsNotFound from './ProductsNotFound';
+
+const { Error } = mongoose;
 
 interface ErrorsInterface {
     [key: string]: string[];
 }
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-    console.log(err)
-    // Thrown when no result could be found in methods which are not allowed to return undefined or an empty set
-    if(err instanceof EntityNotFoundError) {
-        return res.status(404).json({ message: err.message });
-    } 
-    
-    // Thrown when query execution has failed
-    else if(err instanceof QueryFailedError) {
-        return res.status(400).json({ message: err.message })
+
+    if (err instanceof MongoError) {
+        return res.status(500).json({
+            status: 'Mongodb Error',
+            err
+        })
     }
 
-    // Used to handle Yup validation errors
-    else if(err instanceof ValidationError) {
+    // Handle Yup validation errors
+    else if (err instanceof ValidationError) {
         const errors: ErrorsInterface = {};
         
         // Gets what is missing and the error messages
@@ -29,17 +29,17 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
         });
 
         return res.status(500).json({
-            message: 'Validation fails',
+            status: 'Validation fails',
             errors
         })
     }
 
-    // Used when the list of products is empty
-    else if(err instanceof ProductsNotFound) {
+    // Triggered when the list of products is empty
+    else if (err instanceof ProductsNotFound || err instanceof Error.CastError) {
         return res.status(404).json({ Error: err.message });
     }
     console.log(err)
-    return res.status(500).json({ error: "Internal server error!"});
+    return res.status(500).json({ error: "Internal server error!" });
 }
 
 export default errorHandler;

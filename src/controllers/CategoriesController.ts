@@ -25,7 +25,7 @@ export default {
 
             category.save((err) => {
                 const code = 'E11000';  // Duplicate key error
-
+                
                 if (err && !err?.message.includes(code)) console.log(err.name, chalk.red(err.message))
             });
         });

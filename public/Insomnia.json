@@ -1,0 +1,481 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2021-05-16T17:28:06.430Z",
+    "__export_source": "insomnia.desktop.app:v2021.3.0",
+    "resources": [
+        {
+            "_id": "req_53aeb5a9bb7b4debb88b644eb28e5bdd",
+            "parentId": "fld_22c331c6d24148728c4b6f72c6cf4efb",
+            "modified": 1620851761174,
+            "created": 1620675129103,
+            "url": "{{ _.LOCAL_URL }}/homepage/products/filter?ctg=Livros&fil=Low price&pg=1",
+            "name": "Filter products",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1620675129103,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_22c331c6d24148728c4b6f72c6cf4efb",
+            "parentId": "wrk_7c52b9d9af624973829c241a6b039d9a",
+            "modified": 1614869603859,
+            "created": 1614869603859,
+            "name": "Products",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1614869603859,
+            "_type": "request_group"
+        },
+        {
+            "_id": "wrk_7c52b9d9af624973829c241a6b039d9a",
+            "parentId": null,
+            "modified": 1614603986613,
+            "created": 1614603986613,
+            "name": "Vital",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_5a2e86b95af74ea2bbe462bad0f3c6fd",
+            "parentId": "fld_22c331c6d24148728c4b6f72c6cf4efb",
+            "modified": 1620738143686,
+            "created": 1614880617179,
+            "url": "{{ _.LOCAL_URL }}/?pg=1",
+            "name": "List products",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1614882305714,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_57bc462df7c44ba0987f0d7ad9ab7fbe",
+            "parentId": "fld_22c331c6d24148728c4b6f72c6cf4efb",
+            "modified": 1620754510301,
+            "created": 1614882305664,
+            "url": "{{ _.LOCAL_URL }}/product/609a6eb738f0641cd0ba63a",
+            "name": "Show product",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1614882305664,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_6508d5de14834b42ae8146d16fc41f9a",
+            "parentId": "fld_22c331c6d24148728c4b6f72c6cf4efb",
+            "modified": 1620733620533,
+            "created": 1614603995121,
+            "url": "{{ _.LOCAL_URL }}/create-product",
+            "name": "Create product",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "multipart/form-data",
+                "params": [
+                    {
+                        "name": "title",
+                        "value": "teste11",
+                        "description": "",
+                        "id": "pair_caf1a7f1857c485487bfd5f6a37120c7",
+                        "disabled": false
+                    },
+                    {
+                        "name": "category",
+                        "value": "Esporte",
+                        "description": "",
+                        "id": "pair_c21a4fadabd44ca291877922986c467b",
+                        "disabled": false
+                    },
+                    {
+                        "name": "value",
+                        "value": "150",
+                        "description": "",
+                        "id": "pair_122bf6761e434bccba44b5a668c01006",
+                        "disabled": false
+                    },
+                    {
+                        "name": "image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_18274e16f4f447a29b9fe3c7993a3dc6",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/short masculino.jpeg",
+                        "disabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_0e607bd90f02430bb47607368bf16eeb",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/1984.jpeg",
+                        "disabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_d25adbe7eecb4dcbb1ed66e9ee4c5910",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/fone-de-ouvido.jpeg",
+                        "disabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_7bb22599a2ef4a4bb379e866bafff91d",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/bitcoin.jpeg",
+                        "disabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_0bcd5c7c70c64d0787330c7b29b188be",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/teste.jpeg",
+                        "disabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_0595b5fe14db42fe8958efa25f9bef55",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/bola.jpeg",
+                        "disabled": false
+                    },
+                    {
+                        "name": "image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_b00c054779264d6896792e28fd2e5f0b",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/luvas.jpeg",
+                        "disabled": true
+                    }
+                ]
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "multipart/form-data",
+                    "id": "pair_f7c661cfbb5347848ae4703c8c34e92f"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1614603995121,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_a9a73b556e0f4a67a79ea71f26ae8f18",
+            "parentId": "fld_22c331c6d24148728c4b6f72c6cf4efb",
+            "modified": 1620733654929,
+            "created": 1615922273069,
+            "url": "{{ _.LOCAL_URL }}/update-product/609a6eb738f0641cd0ba63af",
+            "name": "Update product",
+            "description": "",
+            "method": "PUT",
+            "body": {
+                "mimeType": "multipart/form-data",
+                "params": [
+                    {
+                        "name": "title",
+                        "value": "teste12",
+                        "description": "",
+                        "id": "pair_f8b14aa5535c430e975368f409d3330a",
+                        "disabled": false
+                    },
+                    {
+                        "name": "category",
+                        "value": "Livros",
+                        "description": "",
+                        "id": "pair_7d3beb644a4a4a818ff95e911f9ce4b6",
+                        "disabled": true
+                    },
+                    {
+                        "name": "value",
+                        "value": "120",
+                        "description": "",
+                        "id": "pair_65a0eea957264cbda34dc11eed89de04",
+                        "disabled": true
+                    },
+                    {
+                        "name": "delete_image",
+                        "value": "b29ce135ed87a2397595edce6c115d64-teste.jpeg",
+                        "description": "",
+                        "id": "pair_5a019ef1b515441b91af13ecf1ded20d",
+                        "type": "text",
+                        "fileName": "/home/nathan/Pictures/1984.jpeg",
+                        "multiline": false,
+                        "disabled": true
+                    },
+                    {
+                        "name": "delete_image",
+                        "value": "96d3946764c370b27171623a8f4eb767-1984.jpeg",
+                        "description": "",
+                        "id": "pair_915c6c28d38e40899bb5152a90140012",
+                        "disabled": true
+                    },
+                    {
+                        "name": "delete_image",
+                        "value": "256d32c887fc773f858a231de93cc5c9-1984.jpeg",
+                        "description": "",
+                        "id": "pair_ab8c11f0637c44a090b500219090a8b1",
+                        "disabled": true
+                    },
+                    {
+                        "name": "update_image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_d8bf2cd4e2cb4149902390c5001a3165",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/fone-de-ouvido(2).jpeg",
+                        "disabled": true
+                    },
+                    {
+                        "name": "update_image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_2a94c934931e4949b47595d66278b5eb",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/computador.jpeg",
+                        "disabled": true
+                    },
+                    {
+                        "name": "update_image",
+                        "value": "",
+                        "description": "",
+                        "id": "pair_e6de906fca2f464f9e1ebff2cd142053",
+                        "type": "file",
+                        "fileName": "/home/nathan/Pictures/teste.jpeg",
+                        "disabled": true
+                    }
+                ]
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "multipart/form-data",
+                    "id": "pair_a1836964924943f9bba7fb59d1125202"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1614603995071,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_335901b3a8ed45ab9eee9777205d33dc",
+            "parentId": "fld_22c331c6d24148728c4b6f72c6cf4efb",
+            "modified": 1620732767362,
+            "created": 1615209083339,
+            "url": "{{ _.LOCAL_URL }}/admin/delete-product/6093f5c93fa68343d8517572",
+            "name": "Delete product",
+            "description": "",
+            "method": "DELETE",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1614603995021,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_f0d86c72a70b437abab9791dc12ff378",
+            "parentId": "fld_adff7f0a814240f7948ac19639489247",
+            "modified": 1620047331053,
+            "created": 1614859885443,
+            "url": "{{ _.LOCAL_URL }}/categories",
+            "name": "Show categories",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1614859885443,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_adff7f0a814240f7948ac19639489247",
+            "parentId": "wrk_7c52b9d9af624973829c241a6b039d9a",
+            "modified": 1614805663907,
+            "created": 1614805663907,
+            "name": "Categories",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1614805663908,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_b519bccdc6a14bb6b0699e33f175b7db",
+            "parentId": "fld_adff7f0a814240f7948ac19639489247",
+            "modified": 1620766633141,
+            "created": 1614805701190,
+            "url": "{{ _.LOCAL_URL }}/admin/delete-categorie",
+            "name": "Delete category",
+            "description": "",
+            "method": "DELETE",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"names\": [\n\t\t\"teste\"\n\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f4ad461987cb4956b7ad9f91db84d2b3"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1614805701190,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_e6df1865ae0e4f598eb3300c73d9c102",
+            "parentId": "fld_adff7f0a814240f7948ac19639489247",
+            "modified": 1620766588275,
+            "created": 1614805680739,
+            "url": "{{ _.LOCAL_URL }}/admin/create-categories",
+            "name": "Create categories",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"names\": [\n\t\t\"teste\"\n\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_8b286a00ca154191a680ffd96226e70a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1614805680739,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "env_e73b2af7b2f29f6e2e773af3e6a177106cdf4353",
+            "parentId": "wrk_7c52b9d9af624973829c241a6b039d9a",
+            "modified": 1621186032033,
+            "created": 1614603986784,
+            "name": "Base Environment",
+            "data": {
+                "LOCAL_URL": "http://localhost:3333"
+            },
+            "dataPropertyOrder": {
+                "&": [
+                    "LOCAL_URL"
+                ]
+            },
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1614603986784,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_e73b2af7b2f29f6e2e773af3e6a177106cdf4353",
+            "parentId": "wrk_7c52b9d9af624973829c241a6b039d9a",
+            "modified": 1614603986786,
+            "created": 1614603986786,
+            "name": "Default Jar",
+            "cookies": [],
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_27c9578994a444a4bd8d90e279b9b436",
+            "parentId": "wrk_7c52b9d9af624973829c241a6b039d9a",
+            "modified": 1614603986642,
+            "created": 1614603986642,
+            "fileName": "Vital",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        }
+    ]
+}

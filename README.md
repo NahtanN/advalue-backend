@@ -1,6 +1,4 @@
-<h1 align="center">
-    Vital Backend
-</h1>
+<h1 align="center"> Vital Backend </h1>
 
 <p align="center">
     <img alt="Repository size" src="https://img.shields.io/github/repo-size/NahtanN/vital-backend">
@@ -21,16 +19,16 @@
 
 <br />
 
-<h2>✅ Table of contents</h2>
+<h2> ✅ Table of contents </h2>
 
 <!--ts-->
 * [Vital Backend](#vital-backend)
 * [Table of contents](#table-of-contents)
 * [Technologies](#technologies)
 * [How to Use](#how-to-use)
-    * [1) Clone and Install](#clone-and-install)
-    * [2) Define database and AWS settings](#define-database-and-AWS-settings)
-    * [3) Clone and Install](#start-the-server)
+    * [Clone and Install](#clone-and-install)
+    * [Define database and AWS settings](#define-database-and-AWS-settings)
+    * [Clone and Install](#start-the-server)
 * [Helpful](#helpful)
 * [Author](#author)
 * [License](#license)
@@ -38,7 +36,7 @@
 
 <br />
 
-<h2>🛠 Technologies</h2> 
+<h2> 🛠 Technologies</h2> 
 <p>This project was developed with the following technologies:</p>
 
 - [Node.js](https://nodejs.org/en/)
@@ -54,7 +52,7 @@
 
 <h2><strong>❗How to Use</strong></h2>
 
-<h3>1) Clone and Install</h3>
+<h3>Clone and Install</h3>
 
 <p>From your command line:</p>
 
@@ -69,7 +67,7 @@ $ cd vital-backend
 $ yarn install
 ```
 
-<h3>2) Define database and AWS settings</h3>
+<h3>Define database and AWS settings</h3>
 
 <p>Before starting the server you will need to define some environment variables. Rename the file <code>.env.example</code> to <code>.env</code> and replace then:</p>
 
@@ -102,7 +100,7 @@ APP_URL =
 
 <p>For more details of how to configure the AWS, read the documentation <a href="https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html">link</a></p>
 
-<h3>3) Start the server</h3>
+<h3>Start the server</h3>
 
 ```bash
 $ yarn dev
@@ -110,7 +108,7 @@ $ yarn dev
 
 <br/>
 
-<h2>⚙️ Helpful</h2>
+<h2> ⚙️ Helpful</h2>
 <p>If you are using <a href="https://insomnia.rest/download">Insomnia</a> to manage the routes, you can import the data from <code>Insomnia.json</code> at <code>public</code> folder for faster access.</p>
 
 <br/>

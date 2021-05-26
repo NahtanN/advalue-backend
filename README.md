@@ -38,7 +38,7 @@
 
 <br />
 
-<h2>🛠 Technologies</h2> 
+<h2> 🛠 Technologies</h2> 
 <p>This project was developed with the following technologies:</p>
 
 - [Node.js](https://nodejs.org/en/)

@@ -21,6 +21,23 @@
 
 <br />
 
+<h2>✅ Table of contents</h2>
+
+<!--ts-->
+* [Vital Backend](#vital-backend)
+* [Table of contents](#table-of-contents)
+* [Technologies](#technologies)
+* [How to Use](#how-to-use)
+    * [1) Clone and Install](#clone-and-install)
+    * [2) Define database and AWS settings](#define-database-and-AWS-settings)
+    * [3) Clone and Install](#start-the-server)
+* [Helpful](#helpful)
+* [Author](#author)
+* [License](#license)
+<!--te-->
+
+<br />
+
 <h2>🛠 Technologies</h2> 
 <p>This project was developed with the following technologies:</p>
 
@@ -54,7 +71,7 @@ $ yarn install
 
 <h3>2) Define database and AWS settings</h3>
 
-<p>Before starting the server you will need to define some environment variables. Rename the file <code>.env.exemple</code> to <code>.env</code> and replace then:</p>
+<p>Before starting the server you will need to define some environment variables. Rename the file <code>.env.example</code> to <code>.env</code> and replace then:</p>
 
 ```bash
 # This variable will enable to save the images in the AWS
@@ -99,8 +116,6 @@ $ yarn dev
 <br/>
 
 <h2>Author</h2>
-
----
 
 <a href="https://github.com/NahtanN">
     <img style="border-radius: 30%" src="https://avatars.githubusercontent.com/u/59841763?v=4" width="100px"/>

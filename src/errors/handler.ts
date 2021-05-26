@@ -36,7 +36,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
     // Triggered when the list of products is empty
     else if (err instanceof ProductsNotFound || err instanceof Error.CastError) {
-        return res.status(404).json({ Error: err.message });
+        return res.json({ Error: err.message });
     }
     console.log(err)
     return res.status(500).json({ error: "Internal server error!" });

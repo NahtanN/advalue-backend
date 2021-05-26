@@ -12,10 +12,11 @@ import ProductsNotFound from '../errors/ProductsNotFound';
  */
 const queryDatabase = async (page: number, category: string = 'index', value?: string | null) => {
 
+	const limitForPagination = 5;
+
 	// Sets the skip value for pagination
-	var skip_value = (page - 1) * 10;
+	var skip_value = (page - 1) * limitForPagination;
 	
-	const limitForPagination = 10;
 	
 	// Query through database
 	const products = 
@@ -44,7 +45,8 @@ const queryDatabase = async (page: number, category: string = 'index', value?: s
 	return {
 		totalProducts,
 		skip_value,
-		products
+		products,
+		limitForPagination
 	};
 }
 
@@ -57,6 +59,7 @@ export default {
 
 		// Gets the products and create pagination		
 		const {
+			limitForPagination,
 			totalProducts,
 			skip_value,
 			products
@@ -65,7 +68,7 @@ export default {
 		return res.status(200).json({
 		    current_page: page,
 		    prev_page: skip_value > 0 ? (page - 1) : null,
-		    next_page: totalProducts > page * 10 ? (page + 1) : null,
+		    next_page: totalProducts > page * limitForPagination ? (page + 1) : null,
 		    quantity: products.length,
 		    data: products
 		});
@@ -80,11 +83,11 @@ export default {
 		var value: string | null;
 
 		switch(filter) {
-			case 'Low+price': {
+			case 'Low-price': {
 				value = 'ASC';
 				break;
 			}
-			case 'High+price': {
+			case 'High-price': {
 				value = 'DESC';
 				break;
 			}
@@ -96,6 +99,7 @@ export default {
 
 		// Gets the products and create pagination		
 		const {
+			limitForPagination,
 			totalProducts,
 			skip_value,
 			products
@@ -104,7 +108,7 @@ export default {
 		return res.status(200).json({
 		    current_page: page,
 		    prev_page: skip_value > 0 ? (page - 1) : null,
-		    next_page: totalProducts > page * 10 ? (page + 1) : null,
+		    next_page: totalProducts > page * limitForPagination ? (page + 1) : null,
 		    quantity: products.length,
 		    data: products
 		});

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 interface DataInterface {
     title: string;
     value: number;
-    category_id: number;
+    category: string;
     images: Array<{
         name?: string;
         size: number;
@@ -19,7 +19,7 @@ export default class CreateProductValidation {
         const productSchema = yup.object().shape({
             title: yup.string().required(),
             value: yup.number().required(),
-            category_id: yup.number().required(),
+            category: yup.string().required(),
             images: yup.array().of(
                 yup.object().shape({
                     name: yup.string().required(),

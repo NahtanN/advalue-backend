@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
 import Product from '../models/Product';
+import { Document } from 'mongoose';
 import CreateProductValidation from '../validation/CreateProductValidation';
 import ImagesController, { MulterFile } from './ImagesController';
 
@@ -18,21 +18,18 @@ export default {
         const data = {
             title,
             value: Number(value),
-            category_id: Number(category),
+            category,
             images,
         };
         
         // Checks if the product data is valid
         await productValidation.validate(data);
 
-        // Connects if 'Product' repository
-        const getProductRepositoy = getRepository(Product);
-
-        // Create the product schema
-        const product = getProductRepositoy.create(data);
-
-        // Save the product into the database
-        await getProductRepositoy.save(product);
+        // Create product
+        const product: Document = new Product(data);
+        
+        // Save product into the database
+        await product.save();
 
         return res.status(201).json(product);
     }

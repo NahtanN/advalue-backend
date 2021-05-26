@@ -1,10 +1,10 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import mongoose, { Schema } from 'mongoose';
 
-@Entity('categories')
-export default class Category {
-    @PrimaryColumn()
-    id: number;
+const categorySchema: Schema = new Schema({
+    name: {
+        type: String,
+        unique: true
+    }
+});
 
-    @Column()
-    name: string;
-}
+export default mongoose.model('Category', categorySchema);

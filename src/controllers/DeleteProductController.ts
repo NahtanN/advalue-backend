@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
-import Product from "../models/Product";
-import ImagesController from './ImagesController';
+import ProductsNotFound from "../errors/ProductsNotFound";
+import Product, { ProductInterface } from "../models/Product";
+import ImagesController, { ImageInterface } from './ImagesController';
 
 const imagesController = new ImagesController();
 
@@ -10,23 +10,23 @@ export default {
     // Delete a product matching the [id]
     async deleteProduct(req: Request, res: Response) {
         const { id } = req.params;
-        
-        const productRepository = getRepository(Product);
 
         // Find the product
-        const product = await productRepository.findOneOrFail({
-            where: {
-                id
-            }
-        })
+        const product = await Product.findOne({
+            _id: id
+        });
+
+        if (!product) throw new ProductsNotFound('Page not found!');
         
         // Deletes all images associated with the product
-        product.images.map(image => {
+        product.images.map((image: ImageInterface) => {
             imagesController.deleteImagesFiles(image.key);
         });
 
-        //  Deleted him
-        await productRepository.remove(product);
+        //  Deleted the product
+        await Product.deleteOne({
+            _id: id
+        });
 
         return res.json({
             status: 'Deleted',

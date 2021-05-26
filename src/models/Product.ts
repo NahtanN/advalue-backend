@@ -1,41 +1,34 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
-import { v4 as uuid } from 'uuid';
-import Category from "./Category";
-import Image from "./Image";
+import mongoose, { Document, Schema } from 'mongoose';
+import { ImageInterface } from '../controllers/ImagesController';
 
-@Entity('products')
-export default class Product {
-    @PrimaryColumn()
-    readonly id: string;
-
-    @Column()
+export interface ProductInterface extends Document {
     title: string;
-
-    @Column()
+    category: string;
     value: number;
-    
-    @CreateDateColumn()
-    created_at: Date;
-
-    @Column()
-    category_id: number;
-
-    @ManyToOne(() => Category, { 
-        cascade: true,
-        eager: true,
-    })
-    @JoinColumn({ name: 'category_id' })
-    category: Category;
-
-    @OneToMany(() => Image, image => image.product, {
-        cascade: true,
-        eager: true
-    })
-    images: Image[];
-
-    constructor() {
-        if (!this.id) {
-            this.id = uuid();
-        }
-    }
+    images: Array<ImageInterface>;
+    createdAt: Date;
+    updateAt: Date;
 }
+
+const productSchema: Schema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    value: {
+        type: Number,
+        required: true
+    },
+    images: [{
+        type: Object,
+        require: true
+    }]    
+}, {
+    timestamps: true
+})
+
+export default mongoose.model<ProductInterface>('Product', productSchema);

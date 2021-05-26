@@ -1,54 +1,130 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
 import Product from "../models/Product";
 import ProductsNotFound from '../errors/ProductsNotFound';
 
+/**
+ * Returns the result of a query in the database
+ * 
+ * @param page - required value for pagination
+ * @param category - optional. Default value iquals 'index'
+ * @param value - optional value for query based on the product value
+ * @returns the total of products queried, how many products was skipped and the products
+ */
+const queryDatabase = async (page: number, category: string = 'index', value?: string | null) => {
+
+	const limitForPagination = 5;
+
+	// Sets the skip value for pagination
+	var skip_value = (page - 1) * limitForPagination;
+	
+	
+	// Query through database
+	const products = 
+		await Product
+			.find(
+				category != 'index' ? { category } : {}
+			)
+			.limit(limitForPagination)
+			.skip(skip_value)
+			.sort(
+				value != null ? { value } : { createdAt: 'desc' }
+			)
+			.select('-__v -createdAt -updatedAt');	
+
+	// Validation
+	if (products.length === 0) throw new ProductsNotFound('Page not found!');
+
+	// Count the total of products in the database
+	const totalProducts = 
+		await Product
+			.find(
+				category != 'index' ? { category } : {}
+			)
+			.countDocuments();	
+	
+	return {
+		totalProducts,
+		skip_value,
+		products,
+		limitForPagination
+	};
+}
+
 export default {
-    // Gets all products from database
-    async listProducts(req: Request, res: Response) {
-        const { pg } = req.query;
-        const page = Number(pg) || 1;
 
-        // Sets the skip value for pagination
-        var skip_value = 0;
+	// Gets all products from database
+	async listProducts(req: Request, res: Response) {
+		const { pg } = req.query;
+		const page = Number(pg) || 1;
 
-        if(pg) skip_value = (page - 1) * 10;
+		// Gets the products and create pagination		
+		const {
+			limitForPagination,
+			totalProducts,
+			skip_value,
+			products
+		} = await queryDatabase(page);		
 
-        // Access the products repository
-        const productRepository = getRepository(Product);
+		return res.status(200).json({
+		    current_page: page,
+		    prev_page: skip_value > 0 ? (page - 1) : null,
+		    next_page: totalProducts > page * limitForPagination ? (page + 1) : null,
+		    quantity: products.length,
+		    data: products
+		});
+	},
 
-        // Gets the products and create pagination
-        const products = await productRepository.findAndCount({
-            order: {
-                created_at: "DESC"
-            },
-            skip: skip_value,
-            take: 10
-        });
-        
-        if(products[0].length === 0) throw new ProductsNotFound('Page not found!')
-        
-        return res.status(200).json({
-            current_page: page,
-            prev_page: skip_value > 0 ? (page - 1) : null,
-            next_page: products[1] > page * 10 ? (page + 1) : null,
-            quantity: products[0].length,
-            data: products[0]
-        });
-    },
+	async queryProducts(req: Request, res: Response) {
+		const { pg, ctg, fil: filter } = req.query;
+		const page = Number(pg) || 1;
+		const category = String(ctg);		
 
-    // Gets a product matching the [id]
-    async getProduct(req: Request, res: Response) {
-        const { id } = req.params;
+		// Sets the filter param
+		var value: string | null;
 
-        const productRepository = getRepository(Product);
-        
-        const product = await productRepository.findOneOrFail({
-            where: {
-                id
-            }
-        });
+		switch(filter) {
+			case 'Low-price': {
+				value = 'ASC';
+				break;
+			}
+			case 'High-price': {
+				value = 'DESC';
+				break;
+			}
+			default: {
+				value = null;
+				break;
+			}
+		}
 
-        return res.status(200).json(product);
-    }
+		// Gets the products and create pagination		
+		const {
+			limitForPagination,
+			totalProducts,
+			skip_value,
+			products
+		} = await queryDatabase(page, category, value);
+
+		return res.status(200).json({
+		    current_page: page,
+		    prev_page: skip_value > 0 ? (page - 1) : null,
+		    next_page: totalProducts > page * limitForPagination ? (page + 1) : null,
+		    quantity: products.length,
+		    data: products
+		});
+	},
+
+	// Gets a product matching the [id]
+	async getProduct(req: Request, res: Response) {
+	    const { id } = req.params;
+
+		const product = await Product.find({
+			_id: id
+		})
+		.select('-__v -createdAt -updatedAt');
+		
+        if (!product) throw new ProductsNotFound('Page not found!');
+
+	    return res.status(200).json(product);
+	}
 }

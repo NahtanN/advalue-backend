@@ -28,7 +28,7 @@
 * [How to Use](#how-to-use)
     * [Clone and Install](#clone-and-install)
     * [Define database and AWS settings](#define-database-and-AWS-settings)
-    * [Clone and Install](#start-the-server)
+    * [Start the server](#start-the-server)
 * [Helpful](#helpful)
 * [Author](#author)
 * [License](#license)
@@ -37,6 +37,7 @@
 <br />
 
 <h2> 🛠 Technologies</h2> 
+
 <p>This project was developed with the following technologies:</p>
 
 - [Node.js](https://nodejs.org/en/)
@@ -109,6 +110,7 @@ $ yarn dev
 <br/>
 
 <h2> ⚙️ Helpful</h2>
+
 <p>If you are using <a href="https://insomnia.rest/download">Insomnia</a> to manage the routes, you can import the data from <code>Insomnia.json</code> at <code>public</code> folder for faster access.</p>
 
 <br/>
